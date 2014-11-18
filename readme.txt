@@ -1,6 +1,6 @@
 === Playwire ===
 
-Contributors: 10up
+Contributors: Playwire
 Site link: http://www.playwire.com
 Tags: Video, Video Gallery, content monetization, advertising, ads, Playwire, Playlist
 Requires at least: 3.5.1
@@ -63,6 +63,6 @@ The ability to upload and select specific video thumbnails will be in the follow
 
 == Changelog ==
 
-= 0.5 =
+= 1.0.0 =
 * Initial Plugin Release
 
