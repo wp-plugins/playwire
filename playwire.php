@@ -4,7 +4,7 @@
 * Plugin URI:  http://wordpress.org/plugins/playwire
 * Plugin Slug: playwire-for-wordpress
 * Description: Playwire interfaces API with WordPress.
-* Version:     1.0.1
+* Version:     1.0.0
 * Author:      Playwire
 * Author URI:  http://www.playwire.com
 * License:     GPLv2+
@@ -243,7 +243,7 @@ class Playwire {
 	/**
 	* @var string The plugin version
 	*/
-	protected $version = '1.0.0';
+	protected $version = '1.0.1';
 
 	/**
 	* @var string Defines the post_meta for the video layout.
