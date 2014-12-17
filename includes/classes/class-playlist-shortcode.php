@@ -33,7 +33,10 @@ class PlaywirePlaylistShortcode extends Playwire {
 		$atts = shortcode_atts( $this->shortcode_atts, $atts );
 		// Use the shortcode attribute to get the playlist template by $post_id ( $playlist_post_id ).
 		if ( ! empty( $atts['playlist_post_id'] ) ) {
+			ob_start();
 			PlaywirePlayerPostHandler::setup_playlist_template( absint( $atts['playlist_post_id'] ), false );
+			$content = ob_get_clean();
+			return $content;
 		}
 	}
 

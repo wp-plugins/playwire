@@ -18,10 +18,8 @@
 
 					<?php if ( has_post_thumbnail( $query->post->ID ) ) : ?>
 						<?php echo get_the_post_thumbnail( $query->post->ID, 'playwire-thumb' ); ?>
-					<?php elseif ( isset( $data['playlist']['thumbnail']['160x120'] ) ) : ?>
-						<img src="<?php echo esc_url( $data['playlist']['thumbnail']['160x120'] ); ?>" alt="">
 					<?php else : ?>
-						<img alt="Ffffff&amp;text=<?php echo esc_attr( ( isset( $data['playlist']['name'] ) ? $data['playlist']['name'] : get_the_title() ) ); ?>" src="<?php echo esc_url( '//placehold.it/160x120/' . strtoupper( dechex( rand( 0, 10000000 ) ) ) . '/ffffff&amp;text=' . esc_attr( ( isset( $data['playlist']['name'] ) ? $data['playlist']['name'] : get_the_title() )) ); ?>">
+						<img alt="Ffffff&amp;text=<?php echo esc_attr( ( isset( $data['playlist']['name'] ) ? $data['playlist']['name'] : get_the_title() ) ); ?>" src="<?php echo esc_url( '//placehold.it/160x120/' . strtoupper( dechex( rand( 0, 10000000 ) ) ) . '/ffffff&amp;text=' . esc_attr( ( isset( $data['playlist']['name'] ) ? $data['playlist']['name'] : get_the_title() )) ); ?>" onError="this.onerror=null;this.src='<?php echo esc_url(  '//placehold.it/160x120/' . strtoupper(  dechex(  rand(  0,  10000000  )  )  ) . '/ffffff&amp;text=No&nbsp;Thumb'  ); ?>';"/>
 					<?php endif; ?>
 						<div class="<?php echo esc_attr( $this->playlist_title ); ?>"><?php echo ( get_the_title() ? get_the_title() : 'Untitled' ); ?></div>
 				</li>

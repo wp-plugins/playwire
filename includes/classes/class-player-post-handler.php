@@ -13,18 +13,18 @@ class PlaywirePlayerPostHandler extends Playwire {
 	 *
 	 * @access public
 	 * @param int $post_id
-	 * @todo: Refactor this it's getting a bit hard to understand.
+	 * @todo: Refactor this it's getting a bit hard to understand.and it should be now used as a general template for playlists and single videos
 	 * @todo: Add caching to the templates on the front-end side of things.
 	 @return void
 	 */
 	public static function setup_playlist_template( $post_id = 0, $array = false ) {
+
 		$post_id = ( $post_id ? $post_id : 0 );
 		// Gets the current playlist for the Playlist
 		$current_playlist                 = self::get_current_playlist( $post_id );
 
 		// Gets the current video layout for the Playlist
 		$current_video_layout             = self::get_current_video_layout( $post_id );
-
 		// Loaded here, used in templates and metabox
 		$current_single_video             = self::get_current_single_video( $post_id );
 
@@ -37,7 +37,6 @@ class PlaywirePlayerPostHandler extends Playwire {
 
 		// Ternary check to see if the option exists in the $template_types array as defined in the Playwire class/
 		$template = ( isset( $current_video_layout ) ? array_search( $current_video_layout, playwire()->template_types ) : 'sorry' );
-
 		// Override for templates without saving/updating the post meta
 		$template             = ( isset( $_POST['template'] )             ? $_POST['template']             : $template             );
 		$current_playlist     = ( isset( $_POST['current_playlist'] )     ? $_POST['current_playlist']     : $current_playlist     );
@@ -86,7 +85,7 @@ class PlaywirePlayerPostHandler extends Playwire {
 
 			// Attempt to include the template
 			if ( file_exists( $file ) ) {
-				include( $file );
+				return include( $file );
 			}
 
 		// Return an array
@@ -129,7 +128,7 @@ class PlaywirePlayerPostHandler extends Playwire {
 	public static function get_current_video_layout( $post_id = 0 ) {
 		$retval = get_post_meta( $post_id, playwire()->video_layout, true );
 		if ( empty( $retval ) ) {
-			$retval = __( 'Playwire Native Playlist', 'playwire' );
+			$retval = __( 'Single Video', 'playwire' );
 		}
 		return $retval;
 	}
@@ -143,7 +142,15 @@ class PlaywirePlayerPostHandler extends Playwire {
 	* @return void
 	*/
 	public static function get_current_single_video( $post_id = 0 ) {
-		return get_post_meta( $post_id, playwire()->single_video, true );
+		$meta = get_post_meta( $post_id, playwire()->single_video, true );
+
+		if ( empty( $meta ) ) {
+			$meta = get_post_meta( $post_id, playwire()->video_meta_name, true );
+			if ( isset( $meta['id'] ) ) {
+				$meta = $meta['id'];
+			}
+		}
+		return $meta;
 	}
 
 

@@ -1,5 +1,4 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
-
 <div id="<?php echo esc_attr( $id ); ?>" style="max-width:<?php echo absint( $current_ratio_width ); ?>px;">
 
 	<script

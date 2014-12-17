@@ -1,7 +1,7 @@
 <?php
 /**
-* Plugin Name: Playwire
-* Plugin URI:  http://wordpress.org/plugins
+* Plugin Name: Playwire for WordPress
+* Plugin URI:  http://wordpress.org/plugins/playwire
 * Plugin Slug: playwire-for-wordpress
 * Description: Playwire interfaces API with WordPress.
 * Version:     1.0.0
@@ -266,6 +266,11 @@ class Playwire {
 	protected $videos_option_name = 'playwire_user_videos';
 
 	/**
+	* @var string Video title class title key
+	*/
+	protected $video_title = 'video_title';
+
+	/**
 	* @var string Defines the published videos option name.
 	*/
 	protected $published_videos_option_name = 'playwire_published_user_videos';
@@ -377,6 +382,7 @@ class Playwire {
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-api-handler.php'            );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-player-post-handler.php'    );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-playlist-library.php'       );
+		require_once( PLAYWIRE_PATH . 'includes/classes/class-video-single-library.php'   );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-playlist-meta-boxes.php'    );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-playlist-shortcode.php'     );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-playlists-cpt.php'          );
@@ -386,6 +392,7 @@ class Playwire {
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-video-category-walker.php'  );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-video-meta-boxes.php'       );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-video-radio-categories.php' );
+		require_once( PLAYWIRE_PATH . 'includes/classes/class-video-shortcode.php'        );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-videos-cpt.php'             );
 	}
 
@@ -397,10 +404,12 @@ class Playwire {
 		new PlaywireAPIHandler();
 		new PlaywireCrons();
 		new PlaywirePlaylistShortcode();
+		new PlaywireVideoShortcode();
 		// Admin only instances
 		if ( is_admin() ) {
 			new PlaywirePlaylistLibrary();
 			new PlaywirePlaylistMetaboxes();
+			new PlaywireVideoSingleLibrary();
 			new PlaywirePostTypePlaylists();
 			new PlaywirePostTypeVideos();
 			new PlaywireSettings();

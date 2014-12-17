@@ -63,6 +63,11 @@ The ability to upload and select specific video thumbnails will be in the follow
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed the video queries in the library so that it pulls in more relevant results
+* Added single videos feature to the plugin
+* Added output buffering for the shortcodes
+
 = 1.0.0 =
 * Initial Plugin Release
 

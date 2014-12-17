@@ -72,6 +72,7 @@
 		var removed_selector = 'single-video-posts-edit-dialog-removed';
 		//Grab the element from the dom by the selector
 		var removed_element  = $( document.getElementById( removed_selector ) );
+		var removed_dialog   = $( document.getElementById( 'single-video-posts-edit-dialog-removed-data-element' ) );
 		removed_element.dialog( {
 				'dialogClass'   : 'wp-dialog',
 				'modal'         : true,
@@ -80,7 +81,7 @@
 				'buttons'       : {
 					"Ignore": function() {
 						//Confirm and update post with new values via ajax
-						var removed_data_element = $( document.getElementById( 'single-video-posts-edit-dialog-removed-data-element' ) );
+						var removed_data_element = $( removed_dialog );
 						var nonce                = removed_data_element.data( 'nonce' );
 						var id                   = removed_data_element.data( 'id' );
 						var removed_request      = $.ajax( {
@@ -181,19 +182,27 @@
 		var playlist = document.getElementsByClassName( 'playlist' );
 		//To keep backwards compatability with browsers we are leaving this event listener with jQuery
 		$( playlist ).click( function() {
-			var playlist_post_id = $( this ).data( "playlist-post-id" );
+			var playlist_post_id = $( this ).data( 'playlist-post-id' );
 			var win = window.dialogArguments || window.opener || window.parent || window.top;
 			win.send_to_editor( String( '[playwire_playlist playlist_post_id=' + playlist_post_id + ']' ) );
 		} );
 	}
 
+	//First check if we are in an iFrame because we are using an iFrame for the Playlist library template
+	if ( window.self !== window.top ) {
+		var video = document.getElementsByClassName( 'video' );
+		//To keep backwards compatability with browsers we are leaving this event listener with jQuery
+		$( video ).click( function() {
+			var video_post_id = $( this ).data( 'video-post-id' );
+			var win = window.dialogArguments || window.opener || window.parent || window.top;
+			win.send_to_editor( String( '[playwire_video video_post_id=' + video_post_id + ']' ) );
+		} );
+	}
 
 	//--------------------------------------------------//
 	// Filters out playlist results using data-attribute
 	//--------------------------------------------------//
-	$( function() {
-		$( document.getElementById( playwire_object.search_input ) ).fastLiveFilter( document.getElementById( playwire_object.search_list ) );
-	} );
+	$( document.getElementById( playwire_object.search_input ) ).fastLiveFilter( document.getElementById( playwire_object.search_list ) );
 
 
 	//--------------------------------------------------//
@@ -417,9 +426,9 @@
 	function playwire_go_to_page( page_num, gallery_class, show_per_page, current_page ) {
 		var start_from = page_num * show_per_page;
 		var end_on = start_from + show_per_page;
-		$( document.getElementsByClassName( String( gallery_class ) ) ).children( 'a' ).css( 'display', 'none' ).slice( start_from, end_on ).css( 'display', 'inline-block' );
-		$( document.getElementsByClassName( String( gallery_class ) ) ).find( '.page[longdesc=' + page_num + ']' ).addClass( 'active' ).siblings( '.active' ).removeClass( 'active' );
-		$( document.getElementsByClassName( String( gallery_class ) ) ).find( '.current_page' ).val( page_num );
+		$( document.getElementsByClassName( gallery_class ) ).children( 'a' ).css( 'display', 'none' ).slice( start_from, end_on ).css( 'display', 'inline-block' );
+		$( document.getElementsByClassName( gallery_class ) ).find( '.page[longdesc=' + page_num + ']' ).addClass( 'active' ).siblings( '.active' ).removeClass( 'active' );
+		$( document.getElementsByClassName( gallery_class ) ).find( '.current_page' ).val( page_num );
 	}
 
 } )( jQuery, this );

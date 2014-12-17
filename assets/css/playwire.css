@@ -103,9 +103,9 @@ div[id^="playwire_gallery_"] {
 
 #playwire_library {
   padding: 0.5em; }
-  #playwire_library ul#search_list li.playlist {
+  #playwire_library ul#search_list li.playlist, #playwire_library ul#search_list li.video {
     display: inline-block; }
-    #playwire_library ul#search_list li.playlist .playlist_title {
+    #playwire_library ul#search_list li.playlist .playlist_title, #playwire_library ul#search_list li.playlist .video_title, #playwire_library ul#search_list li.video .playlist_title, #playwire_library ul#search_list li.video .video_title {
       margin: 0.5em;
       text-align: center; }
 
