@@ -54,7 +54,6 @@ For websites with great traffic, apply to be a Premium Partner, where we host an
 
 The ability to upload and select specific video thumbnails will be in the following version of this plugin. To change your video thumbnail, log into your Playwire account on Playwire.com, edit the video that you wish to customize, and select or upload a thumbnail of your choice.
 
-
 == Screenshots ==
 
 1. Example of admin video interface for Playwire
