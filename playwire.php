@@ -4,7 +4,7 @@
 * Plugin URI:  http://wordpress.org/plugins/playwire
 * Plugin Slug: playwire-for-wordpress
 * Description: Playwire interfaces API with WordPress.
-* Version:     1.0.0
+* Version:     1.0.1
 * Author:      Playwire
 * Author URI:  http://www.playwire.com
 * License:     GPLv2+
