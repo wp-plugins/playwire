@@ -3,7 +3,7 @@
 * Plugin Name: Playwire for WordPress
 * Plugin URI:  http://wordpress.org/plugins/playwire
 * Plugin Slug: playwire-for-wordpress
-* Description: Connects Wordpress to the Playwire API - Embed your Playwire videos and create and embed Video Galleries to use on your Wordpress site. 
+* Description: Connects Wordpress to the Playwire API - Embed your Playwire videos and create and embed Video Galleries to use on your Wordpress site.
 * Version:     1.0.2
 * Author:      Playwire
 * Author URI:  http://www.playwire.com
@@ -608,7 +608,7 @@ class Playwire {
 		// Scripts
 		wp_register_script( 'fast-live-filter', PLAYWIRE_URL . 'assets/js/vendor/jquery-fastLiveFilter/jquery.fastLiveFilter.js', array(),                                                         $version, true );
 		wp_register_script( 'flexslider',       PLAYWIRE_URL . 'assets/js/vendor/flexslider/jquery.flexslider-min.js',            array(),                                                         $version, true );
-		wp_register_script( 'playwire-scripts', PLAYWIRE_URL . 'assets/js/playwire.min.js',                                       array( 'jquery', 'jquery-ui-dialog',  'thickbox', 'fast-live-filter', 'flexslider' ), $version, true );
+		wp_register_script( 'playwire-scripts', PLAYWIRE_URL . 'assets/js/playwire.js',                                       array( 'jquery', 'jquery-ui-dialog',  'thickbox', 'fast-live-filter', 'flexslider' ), $version, true );
 
 		$post_id = ( isset( $post->ID ) ? $post->ID : 0 );
 		$localized_vars = array( 'adminurl' => esc_url( admin_url( "edit.php?post_type={$this->videos_post_type}" ) ), 'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ), 'compare_json' => PlaywireVideoApiInterface::compare_json( $post_id ) );
