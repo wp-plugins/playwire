@@ -6,7 +6,32 @@
 
 	<ul id="<?php echo esc_attr( $this->search_list ); ?>">
 
-		<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+		<?php if (!$query->have_posts() ) : 
+
+			$has_playlists = PlaywirePublisher::get_playlists();
+			$url = PlaywirePublisher::pub_id_playlists();
+
+		?>
+
+			<div class="error-container">
+				<div class="playwire-error animated shake">
+					<h3><span class="error-text"><span class="dashicons dashicons-flag"></span> NO PLAYLISTS AVAILABLE</span></h3>
+					<h3 class="error-styles">You <u><strong>MUST</strong></u> create playlists on your Playwire.com account before you are able to create and embed Video Galleries</h3>
+
+					<div class="half">
+						<h3 class="error-styles">To get started,&nbsp;<a href="<?php echo $url ?>" target="_blank">Create Playlists on Playwire&nbsp;</a></h3>
+						</h3>
+					</div>
+
+					<div class="half-r">
+						<h3 class="error-styles">or visit our Support Site for&nbsp;<a href="http://support.playwire.com" target="_blank">Help Creating Playlists</a></h3>
+					</div>
+				</div>
+			</div>
+
+		<?php else : ?>
+
+		<? while ( $query->have_posts() ) : $query->the_post(); ?>
 
 			<?php $data = PlaywirePlayerPostHandler::setup_playlist_template( $query->post->ID, true ); ?>
 				<li class="playlist"
@@ -27,6 +52,8 @@
 		<?php endwhile; ?>
 
 		<?php wp_reset_postdata(); ?>
+
+		<?php endif; ?>
 
 	</ul>
 

@@ -89,6 +89,9 @@ class PlaywireAPIHandler extends Playwire {
 				'body'        => $post_data,
 				'headers'     => $headers,
 			);
+
+			//print_r($args);
+
 			switch ( $method ) {
 				case "GET":
 					$response = wp_remote_request( esc_url_raw( $url ), $args );
@@ -158,7 +161,7 @@ class PlaywireAPIHandler extends Playwire {
 	* @access public
 	* @return void
 	*/
-	public static function request_token( $password = '' ) {
+	public static function request_token( $password = '', $new_email ) {
 
 		$playwire = playwire();
 
@@ -166,7 +169,7 @@ class PlaywireAPIHandler extends Playwire {
 		$url      = $playwire->api_endpoint . '/users/login';
 
 		// Ternary check from main plugin options for the users email address
-		$login    = ( isset( $playwire->options[ $playwire->email_address ] ) ? $playwire->options[ $playwire->email_address ] : '' );
+		$login    = ( isset( $playwire->options[ $playwire->email_address ] ) ? $playwire->options[ $playwire->email_address ] : $new_email );
 
 		// Set the arguments for our login to Playwire these values are taken
 		// from the main plugin settings
@@ -177,11 +180,11 @@ class PlaywireAPIHandler extends Playwire {
 			'httpversion' => '1.0',
 			'headers'     => $playwire->headers,
 			'body'        => array(
-				'login'    => $login,
-				'password' => $password
+			'login'       => $login,
+			'password'    => $password
 			)
 		);
-
+		//print_r($args);
 		// Remote post to the playwire API our URL and arguments for login
 		$response = wp_remote_post( esc_url_raw( $url ), $args );
 
@@ -193,7 +196,9 @@ class PlaywireAPIHandler extends Playwire {
 
 				$json = json_decode( $response['body'], true ); //wp_remote_retrieve_body doesn't seem to like it here
 
+
 			} catch ( Exception $ex ) {
+
 
 				$json = null;
 
@@ -363,9 +368,9 @@ class PlaywireAPIHandler extends Playwire {
 	public static function sync_all_videos_from_api() {
 		global $wpdb;
 		$playwire         = playwire();
-
-		$playwire->videos = ( is_array( $playwire->videos ) ? $playwire->videos : array() );
-
+		//print_r(get_option($playwire->videos_option_name, true));
+		$playwire->videos = ( ( $playwire->videos ) ? $playwire->videos : get_option($playwire->videos_option_name, true) );
+		//print_r($playwire->videos);
 		//Get json object
 		$videos = $playwire->videos;
 		//Loop through the videos API object

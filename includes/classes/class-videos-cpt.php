@@ -47,7 +47,7 @@ class PlaywirePostTypeVideos extends Playwire {
 			'new_item'             => esc_attr__( 'New Video',                'playwire' ),
 			'view_item'            => esc_attr__( 'View Video',               'playwire' ),
 			'search_items'         => esc_attr__( 'Search Video',             'playwire' ),
-			'not_found'            => esc_attr__( 'No videos found',          'playwire' ),
+			'not_found'            => esc_attr__( "Oops, you don't have any Videos yet, click the 'Add New Video' button above or upload videos to your Playwire.com account to get started",          'playwire' ),
 			'not_found_in_trash'   => esc_attr__( 'No videos found in trash', 'playwire' ),
 			'parent_item_colon'    => esc_attr__( 'Parent Video:',            'playwire' ),
 			'menu_name'            => esc_attr__( 'Playwire',                 'playwire' ),
@@ -201,7 +201,7 @@ class PlaywirePostTypeVideos extends Playwire {
 		switch ( $column_name ) {
 			case 'video_thumbnail':
 				$video_id        = get_post_meta( $post_ID, $this->video_meta_name, true );
-				$video_thumbnail = ( isset( $video_id['thumbnail']['320x240'] ) ? $video_id['thumbnail']['320x240'] : '//placehold.it/320x240/' . strtoupper(  dechex(  rand(  0,  10000000  )  )  ) . '/ffffff&amp;text=No&nbsp;Thumb' );
+				$video_thumbnail = ( isset( $video_id['thumbnail']['320x240'] ) ? $video_id['thumbnail']['320x240'] : '//placehold.it/320x240/' . strtoupper(  dechex(  rand(  0,  10000000  )  )  ) . '/ffffff&amp;text=No&nbsp;Thumbnail' );
 				?>
 				<img src="<?php echo esc_url( $video_thumbnail ); ?>">
 				<?php
@@ -242,7 +242,6 @@ class PlaywirePostTypeVideos extends Playwire {
 		return $columns;
 	}
 
-
 	/**
 	 * reset_videos_excerpt_metabox
 	 *
@@ -251,9 +250,8 @@ class PlaywirePostTypeVideos extends Playwire {
 	 */
 	public function reset_videos_excerpt_metabox( ) {
 		remove_meta_box( 'postexcerpt', $this->videos_post_type, 'normal' );
-		add_meta_box( 'postexcerpt', __( 'Description' ), 'post_excerpt_meta_box', $this->videos_post_type, 'normal', 'high' );
+		add_meta_box( 'postexcerpt', __( 'Video Description' ), 'post_excerpt_meta_box', $this->videos_post_type, 'normal', 'high' );
 	}
-
 
 	/**
 	* video_helper_text
@@ -262,12 +260,32 @@ class PlaywirePostTypeVideos extends Playwire {
 	* @return void
 	*/
 	public function video_helper_text() {
+
 		global $pagenow;
+
+		$publisher_id = PlaywirePublisher::get_pub_id();
+		$url = PlaywirePublisher::pub_id_videos();
+
 		if ( ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) && get_post_type() === $this->videos_post_type  ) {
-			?>
-			<div class="updated">
-				<p><?php _e( 'The upload file size limit with this plugin is approximately 20mb. You may upload larger video files from your Playwire.com account.', 'playwire' ); ?></p>
-			</div>
+
+			if (empty($publisher_id)): ?>
+				<div class="error-container">
+					<div class="playwire-error animated shake">
+						<h3><span class="error-text"><span class="dashicons dashicons-flag"></span> UNABLE TO USE PLAYWIRE PLUGIN</span></h3>
+							<h3 class="error-styles">You must have at least one video on your Playwire.com account before using the plugin. </br><a href="<?php echo $url ?>" target="_blank">Click here</a> to upload video files from Playwire.com account or visit our <a href="<?php echo esc_url('http://support.playwire.com') ?>" target="_blank">Support Site</a> for help.</h3>
+					</div>
+				</div>
+
+			<?php else: ?>
+				<div class="error-container">
+					<div class="playwire-warning animated flash">
+						<h3><span class="warning-text"><span class="dashicons dashicons-flag"></span> IMPORTANT REMINDER</span></h3>
+						<h3 class="error-styles">The upload file size limit with this plugin is approximately <b>20MB</b>. <a href="<?php echo $url ?>" target="_blank">Click here</a> to upload larger video files from your Playwire.com account or visit our <a href="<?php echo esc_url('http://support.playwire.com') ?>" target="_blank">Support Site</a> for instructions on increasing your Wordpress upload limit.</h3>
+					</div>
+				</div>
+
+			<?php endif; ?>
+			
 			<?php
 		}
 	}

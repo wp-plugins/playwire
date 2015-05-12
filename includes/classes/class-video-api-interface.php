@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class PlaywireVideoApiInterface extends Playwire {
 
-
 	/**
 	* __construct
 	*
@@ -23,7 +22,6 @@ class PlaywireVideoApiInterface extends Playwire {
 		add_action( 'wp_ajax_ajax_update_post',             array( __CLASS__, 'ajax_update_post'           ) );
 		add_action( 'wp_ajax_ajax_delete_post_meta',        array( __CLASS__, 'ajax_delete_post_meta'      ) );
 	}
-
 
 	/**
 	* compare_json
@@ -71,7 +69,6 @@ class PlaywireVideoApiInterface extends Playwire {
 		}
 
 	}
-
 
 	/**
 	* ajax_update_post
@@ -128,7 +125,6 @@ class PlaywireVideoApiInterface extends Playwire {
 
 	}
 
-
 	/**
 	* ajax_delete_post_meta
 	*
@@ -148,7 +144,6 @@ class PlaywireVideoApiInterface extends Playwire {
 		die();
 	}
 
-
 	/**
 	* ajax_delete_post
 	*
@@ -166,7 +161,6 @@ class PlaywireVideoApiInterface extends Playwire {
 		}
 		die();
 	}
-
 
 	/**
 	* delete_video_post
@@ -210,6 +204,9 @@ class PlaywireVideoApiInterface extends Playwire {
 
 		$playwire = playwire();
 
+		//print_r(get_post_meta($post_id, $playwire->video_meta_name, true));
+
+
 		// Bail if not the correct post type
 		if ( playwire()->videos_post_type !== get_post_type( $post_id ) ) {
 			return;
@@ -229,6 +226,11 @@ class PlaywireVideoApiInterface extends Playwire {
 			return;
 		}
 
+		if(get_post_status($post_id) == 'auto-draft'){
+			//This is the beginning of a new post. WP automatically saves an Auto Draft when a new post is created. Thus firing off the saved_post action.
+			return;
+		}
+
 		//Get post meta for the videos json array
 		$post_meta = get_post_meta( $post_id, $playwire->video_meta_name, true );
 		//If the meta doesn't exist then we know that we are probably creating a new video
@@ -237,10 +239,11 @@ class PlaywireVideoApiInterface extends Playwire {
 			$playwire->post_videos_arr['video_method'] = 'PUT';
 			$playwire->post_videos_arr['video']['id']  = $post_meta['id'];
 		} else {
-			//If the post meta doesn't exist then we simply want to remove the id to avoid
-			//confusion for the API by not updating other existing videos
+			//If the post meta doesn't exist then we are creating a new video. No need to continue yet. Wordpress fires off
+			//saved_post action when creating new post because it creates a "Auto Draft" post in the DB. Thus saving.
 			$playwire->post_videos_arr['video_method'] = 'POST';
 			unset( $playwire->post_videos_arr['video']['id'] );
+
 		}
 
 		$category_id = term_description( ( int ) @$_POST['radio_tax_input'][$playwire->videos_taxonomy][0], $playwire->videos_taxonomy );
@@ -275,11 +278,13 @@ class PlaywireVideoApiInterface extends Playwire {
 				$playwire->post_videos_arr['video']['thumbnail'][$key] = $thumb_url;
 			}
 		}
-
+		$headers = PlaywireAPIHandler::add_token_to_headers( false );
 		if ( isset( $playwire->post_videos_arr['video']['id'] ) ) {
-			$post_request = PlaywireAPIHandler::request( $playwire->api_endpoint . "/videos/{$playwire->post_videos_arr['video']['id']}", array(), $playwire->post_videos_arr, $playwire->post_videos_arr['video_method'] );
+			$post_request = PlaywireAPIHandler::request( $playwire->api_endpoint . "/videos/{$playwire->post_videos_arr['video']['id']}", $headers, $playwire->post_videos_arr, $playwire->post_videos_arr['video_method'] );
+
 		} else {
-			$post_request = PlaywireAPIHandler::request( $playwire->api_endpoint . '/videos', array(), $playwire->post_videos_arr, $playwire->post_videos_arr['video_method'] );
+			$post_request = PlaywireAPIHandler::request( $playwire->api_endpoint . '/videos', $headers, $playwire->post_videos_arr, $playwire->post_videos_arr['video_method'] );
+
 		}
 
 		if ( is_object( $post_request ) && isset( $post_request->state ) && $post_request->state === 'approved' ) {
@@ -293,4 +298,3 @@ class PlaywireVideoApiInterface extends Playwire {
 	}
 
 }
-

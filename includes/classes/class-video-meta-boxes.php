@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 */
 class PlaywireVideoMetaboxes extends Playwire {
 
-
 	/**
 	* __construct function.
 	*
@@ -131,6 +130,10 @@ class PlaywireVideoMetaboxes extends Playwire {
 	* @return void
 	*/
 	public function video_preview_meta_box( $post = false ) {
+
+		// Gets the current pub id (string) for the Playlist
+		$current_publisher_id = PlaywirePlayerPostHandler::get_current_publisher_id( $post->ID);
+
 		$video_id = get_post_meta( $post->ID, $this->video_meta_name, true );
 		$video_id = ( isset( $video_id['id'] ) ? $video_id['id'] : '' );
 		include( PLAYWIRE_PATH . 'templates/template-video-preview-meta-box.php' );
@@ -148,7 +151,7 @@ class PlaywireVideoMetaboxes extends Playwire {
 	*/
 	public function video_thumbnail_meta_box( $post = false ) {
 		$video           = get_post_meta( $post->ID, $this->video_meta_name, true );
-		$video_thumbnail = ( isset( $video['thumbnail']['320x240'] ) ? $video['thumbnail']['320x240'] : '//placehold.it/320x240/' . strtoupper(  dechex(  rand(  0,  10000000  )  )  ) . '/ffffff&amp;text=No Preview' );
+		$video_thumbnail = ( isset( $video['thumbnail']['320x240'] ) ? $video['thumbnail']['320x240'] : '//placehold.it/320x240/' . strtoupper(  dechex(  rand(  0,  10000000  )  )  ) . '/ffffff&amp;text=No&nbsp;Thumbnail' );
 		$video           = ( isset( $video['id'] ) ? $video['id'] : '' );
 		include( PLAYWIRE_PATH . 'templates/template-video-thumbnail-meta-box.php' );
 	}

@@ -8,12 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 */
 class PlaywireCrons extends Playwire {
 
-
 	/**
 	* __construct function.
 	*
 	* @access public
 	* @return void
+	* @todo find a way to add minute schedule interval to WP cron.php file through plugin
 	*/
 	public function __construct() {
 
@@ -22,7 +22,6 @@ class PlaywireCrons extends Playwire {
 			wp_schedule_event( time(), 'hourly', 'update_playwire_data' );
 		}
 	}
-
 
 	/**
 	* cron function.
@@ -41,6 +40,7 @@ class PlaywireCrons extends Playwire {
 		// Update the local videos option
 		$page        = 1;
 		$request_arr = array();
+
 		do {
 			$headers = PlaywireAPIHandler::add_token_to_headers( false );
 			$request = PlaywireAPIHandler::request( $playwire->api_endpoint . "/videos.json?per=200&page={$page}", $headers );

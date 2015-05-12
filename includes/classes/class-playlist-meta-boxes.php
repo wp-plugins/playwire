@@ -153,8 +153,8 @@ class PlaywirePlaylistMetaboxes extends Playwire {
 	* @return void
 	*/
 	public function action_add_meta_boxes() {
-		add_meta_box( 'playlist_settings_meta_box', __( 'Playlist Options',  'playwire' ), array( $this, 'playlist_settings_meta_box' ), $this->playlists_post_type, 'normal', 'core'    );
-		add_meta_box( 'playlist_preview_meta_box',  __( 'Playlist Preview',  'playwire' ), array( $this, 'playlist_preview_meta_box'  ), $this->playlists_post_type, 'normal', 'default' );
+		add_meta_box( 'playlist_settings_meta_box', __( 'Video Gallery Options',  'playwire' ), array( $this, 'playlist_settings_meta_box' ), $this->playlists_post_type, 'normal', 'core'    );
+		add_meta_box( 'playlist_preview_meta_box',  __( 'Video Gallery Preview',  'playwire' ), array( $this, 'playlist_preview_meta_box'  ), $this->playlists_post_type, 'normal', 'default' );
 	}
 
 
@@ -202,6 +202,9 @@ class PlaywirePlaylistMetaboxes extends Playwire {
 
 		$current_gallery_pagination   = PlaywirePlayerPostHandler::get_current_gallery_pagination_type( $post->ID );
 
+		// Gets the current pub id (string) for the Playlist
+		$current_playlist_publisher_id = PlaywirePlayerPostHandler::get_current_playlist_publisher_id( $post->ID);
+
 		// Override for templates without saving/updating the post meta
 		$template             = ( isset( $_POST['template'] )             ? $_POST['template']             : 'native'              );
 		$current_playlist     = ( isset( $_POST['current_playlist'] )     ? $_POST['current_playlist']     : $current_playlist     );
@@ -211,6 +214,7 @@ class PlaywirePlaylistMetaboxes extends Playwire {
 
 
 		include( PLAYWIRE_PATH . 'templates/template-playlist-settings-meta-box.php' );
+
 	}
 
 

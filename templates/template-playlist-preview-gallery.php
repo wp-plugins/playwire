@@ -1,11 +1,15 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly 
+	$publisher_id = PlaywirePublisher::get_pub_id();
+?>
+
 <div id="<?php echo esc_attr( $id ); ?>">	<?php $count = 0; ?>
 	<?php foreach ( $playlist['videos'] as $key => $value ) : ?>
 			<?php if ( 0 == $count % 3 ) : ?>
 				<div class="clear"></div>
 			<?php endif; ?>
 			<div id="<?php echo esc_attr( $value['id'] ); ?>" style="display:none">
-				<script data-config="<?php echo esc_url( '//phoenix.playwire.com/videos/' . rtrim( $value['id'], '/' ) . '/new_player.json' ); ?>" data-height="<?php echo absint( $current_ratio_height ); ?>" data-width="<?php echo absint( $current_ratio_width ); ?>" src="//cdn.playwire.com/bolt/js/embed.min.js" type="text/javascript"></script>
+
+				<script data-config="<?php echo esc_url( '//config.playwire.com/' . rtrim($publisher_id, '/' ) . '/videos/v2/' . rtrim( $value['id'], '/' ) . '/zeus.json' ); ?>" data-height="<?php echo absint( $current_ratio_height ); ?>" data-width="<?php echo absint( $current_ratio_width ); ?>" data-css="//cdn.playwire.com/bolt/js/zeus/skins/default.css" src="//cdn.playwire.com/bolt/js/zeus/embed.js" type="text/javascript"></script>
 			</div>
 			<a class="thickbox" title="<?php echo esc_attr( $value['name'] ); ?>" href="#TB_inline?height=<?php echo absint( $current_ratio_height ); ?>&amp;width=<?php echo absint( $current_ratio_width ); ?>&amp;inlineId=<?php echo esc_attr( $value['id'] ); ?>">
 				<div class="vertical-video-alignment">

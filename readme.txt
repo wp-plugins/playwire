@@ -2,10 +2,10 @@
 
 Contributors: Playwire
 Site link: http://www.playwire.com
-Tags: Video, Video Gallery, content monetization, advertising, ads, Playwire, Playlist
-Requires at least: 3.8
+Tags: Video, Video Gallery, content monetization, advertising, ads, Playwire, Playlist, upload video, video management
+Requires at least: 3.5.1
 Tested up to: 4.2.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,17 +60,18 @@ The ability to upload and select specific video thumbnails will be in the follow
 2. Example of admin playlist interface for Playwire
 3. Example of video preview on playlist interface for Playwire
 
-== Upgrade Notice ==
-Introducing the new Bolt Player! Greater device and cross-browser compatibility with a brand new look! Only upgrade if you are using Wordpress version 3.8 or higher.
-
 == Changelog ==
+
+= 1.0.3 =
+* Upload video to Phoenix bug fixes for Wordpress versions 3.5-3.9
+* No videos/playlists error messaging in media library view
+* Small bug and styling fixes
 
 = 1.0.2 =
 * Added Bolt Player 3.0 API Support
 * Renamed “Playlists” to “Video Galleries” to reduce confusion
 * Improved user experience for uploading videos and creating Video Galleries
 * Small bug fixes
-
 
 = 1.0.1 =
 * Fixed the video queries in the library so that it pulls in more relevant results

@@ -27,10 +27,9 @@ class PlaywirePlaylistLibrary extends Playwire{
 	* @return void
 	*/
 	public function add_playlist_tab( $tabs ) {
-		$tab = array( 'playwire_playlists' => __( 'Insert Playwire Playlist', 'playwire' ) );
+		$tab = array( 'playwire_playlists' => __( 'Insert Playwire Video Gallery', 'playwire' ) );
 		return array_merge( $tabs, $tab );
 	}
-
 
 	/**
 	* init_media_menu
@@ -41,7 +40,6 @@ class PlaywirePlaylistLibrary extends Playwire{
 	public function init_media_menu() {
 		return wp_iframe( array( $this, 'media_playlist_library_display') );
 	}
-
 
 	/**
 	* media_playlist_library_display
@@ -56,7 +54,7 @@ class PlaywirePlaylistLibrary extends Playwire{
 		$query = new WP_Query( array(
 			'post_type'      => playwire()->playlists_post_type,
 			'post_status'    => 'publish',
-			'offset'         => ( isset( $_REQUEST['pagenum'] ) ? $_REQUEST['pagenum'] : 1 ),
+			//'offset'         => ( isset( $_REQUEST['pagenum'] ) ? $_REQUEST['pagenum'] : 1 ),
 			'posts_per_page' => 50
 		) );
 

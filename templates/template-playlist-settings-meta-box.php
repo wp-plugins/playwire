@@ -7,59 +7,95 @@ if ( empty( $current_ratio ) ) {
 	$current_ratio_select = 'medium';
 }
 
-?>
+global $pagenow;
 
-<section id="<?php echo esc_attr( $this->single_video ); ?>" style="<?php if ( $current_video_layout != 'Single Video' ) echo "display:none;" ?>">
+$publisher_id = PlaywirePublisher::get_pub_id();
+$url = PlaywirePublisher::pub_id_playlists();
 
-	<label for="<?php echo esc_attr( $this->single_video ); ?>"><?php esc_html_e( 'Playwire Video', 'playwire' ); ?></label>
+if ( ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) && get_post_type() === $this->playlists_post_type  ) {
+	?>
+	
+	<div class="playlist-steps">
+		<h3 class="playlist-heading">Follow these steps to <span class="underline">create</span> Video Galleries from your Playwire playlists:</h3>
 
-	<p>
+		<ol>
+			<li>Name your Video Gallery above</li>
+			<li>Select a playlist from your Playwire Account (right below the instructions)</li>
+			<li>Select your desired layout - Native, Film Strip, Gallery</li>
+			<li>Click Publish to save your video gallery.</li>
+			<li>You're now ready to embed, follow the next steps below.</li>
+		</ol>
 
-		<select name="<?php echo esc_attr( $this->single_video ); ?>" class="widefat">
+		<hr>
 
-			<option value="0"><?php esc_html_e( '&mdash; No video selected &mdash;', 'playwire' ); ?></option>
+		<h3 class="playlist-heading">Follow these steps to <span class="underline">embed</span> Video Galleries into you posts and pages:</h3>
 
-			<?php foreach ( $videos as $key => $value ) : ?>
+		<img class="metabox-image" src="<?php echo PLAYWIRE_URL . "assets/img/videoGalleryStep1.jpg";?>" alt="Creating Video Galleries - Step One" />
 
-				<option data-current-single-video="<?php echo esc_attr( $value['id'] ); ?>" value="<?php echo esc_attr( $value['id'] ); ?>" <?php selected( $current_single_video, $value['id'] ); ?>>
-					<?php echo esc_html( $value['name'] ); ?>
-				</option>
+		<img class="metabox-image" src="<?php echo PLAYWIRE_URL . "assets/img/videoGalleryStep2.jpg";?>" alt="Creating Video Galleries - Step Two" />
 
-			<?php endforeach; ?>
+		<img class="metabox-image" src="<?php echo PLAYWIRE_URL . "assets/img/videoGalleryStep3.jpg";?>" alt="Creating Video Galleries - Step Three" />
 
-		</select>
+	</div>
+	
+<?php } ?>
 
-	</p>
+<section id="<?php echo esc_attr( $this->video_playlist ); ?>">
+
+	<?php if ( $playlists ) : ?>
+		<hr>
+		<h3 class="playlist-heading">Configure your Video Gallery options below:</h3>
+		
+		<label for="<?php echo esc_attr( $this->video_playlist ); ?>"><strong>
+			<?php esc_html_e( 'Select a Playlist from your Playwire.com Account:', 'playwire' ); ?></strong>
+		</label>
+
+		<p>
+			<select name="<?php echo esc_attr( $this->video_playlist ); ?>" class="widefat">
+
+				<option value="0"><?php esc_html_e( '&mdash; No playlist selected, please click here to select a playlist &mdash;', 'playwire' ); ?></option>
+
+				<?php foreach ( $playlists as $playlist ) : ?>
+
+					<option value="<?php echo esc_attr( $playlist['id'] ); ?>" <?php selected( $current_playlist, $playlist['id'] ); ?>><?php echo esc_attr( $playlist['name'] ); ?></option>
+
+				<?php endforeach; ?>
+			</select>
+		</p>
+
+	<?php else : ?>
+
+		<?php if ( $pagenow == "edit.php" || $pagenow == "post.php" || $pagenow == "post-new.php" ) : ?>
+			<div class="playwire-error">
+				<?php esc_html_e( 'You must create playlists on Playwire.com before you can create Video Galleries', 'playwire' ); ?></br></br>
+				<a href="<?php echo $url ?>" target="_blank"> &Rightarrow; Click here to Create Playlists on Playwire</a>
+			</div>
+			
+		<?php endif; ?>
+
+	<?php endif; ?>
 
 </section>
 
+<?php if ( $playlists ) : ?>
+	<section id="<?php echo esc_attr( $this->video_layout ); ?>">
+<?php else : ?>
 
-<section id="<?php echo esc_attr( $this->video_playlist ); ?>" style="<?php if ( $current_video_layout === 'Single Video' ) echo "display:none;" ?>">
-
-	<label for="<?php echo esc_attr( $this->video_playlist ); ?>">
-		<?php esc_html_e( 'Playwire Playlist', 'playwire' ); ?>
-	</label>
-
+	<span class="no-select-text">
+		<span class="dashicons dashicons-dismiss big-icon"></span>
+		Disabled until you upload Playlists to Playwire
+	</span>
+	<section id="<?php echo esc_attr( $this->video_layout ); ?>" class="no-select">	
 	<p>
 
 		<select name="<?php echo esc_attr( $this->video_playlist ); ?>" class="widefat">
 
-			<option value="0"><?php esc_html_e( '&mdash; No playlist selected &mdash;', 'playwire' ); ?></option>
-
-			<?php foreach ( $playlists as $playlist ) : ?>
-
-				<option value="<?php echo esc_attr( $playlist['id'] ); ?>" <?php selected( $current_playlist, $playlist['id'] ); ?>><?php echo esc_attr( $playlist['name'] ); ?></option>
-
-			<?php endforeach; ?>
+			<option value="0"><?php esc_html_e( '&mdash; No playlists available  &mdash;', 'playwire' ); ?></option>
 
 		</select>
 
 	</p>
-
-</section>
-
-
-<section id="<?php echo esc_attr( $this->video_layout ); ?>">
+<?php endif; ?>
 
 	<p>
 
@@ -67,11 +103,17 @@ if ( empty( $current_ratio ) ) {
 
 		<ul>
 
-				<?php foreach ( playwire()->template_types as $key => $value ) : ?>
+				<?php foreach ( playwire()->template_types as $key => $value ) : 
+					// hide single template for now
+					// TODO remove from playlists altogether
+					if ($key == 'single') continue;
+				?>
 
 				<li>
 
 					<label>
+
+					<span class="radio-btn-helper"><?php echo esc_html( $value . '&nbsp;&gt;'); ?></span>
 
 						<input data-template="<?php echo esc_attr( $key ); ?>" type="radio" name="<?php echo esc_attr( $this->video_layout ); ?>" id="<?php echo esc_attr( playwire()->playwire_aspect_ratio['option_name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" <?php checked( $current_video_layout, $value ); ?>>
 
@@ -80,8 +122,6 @@ if ( empty( $current_ratio ) ) {
 						<img src="<?php echo PLAYWIRE_URL . "assets/img/{$key}.png";?>" alt="single-video" width="200" height="auto" />
 
 						</br>
-
-						<?php echo esc_html( $value ); ?>
 
 					</label>
 
@@ -96,7 +136,11 @@ if ( empty( $current_ratio ) ) {
 </section>
 
 
-<section id="<?php echo esc_attr( playwire()->playwire_aspect_ratio['option_name'] ); ?>">
+<?php if ( $playlists ) : ?>
+	<section id="<?php echo esc_attr( playwire()->playwire_aspect_ratio['option_name'] ); ?>">
+<?php else : ?>
+	<section id="<?php echo esc_attr( playwire()->playwire_aspect_ratio['option_name'] ); ?>" class="no-select">
+<?php endif; ?>
 
 	<p>
 
@@ -118,7 +162,13 @@ if ( empty( $current_ratio ) ) {
 
 </section>
 
-<section id="<?php echo esc_attr( playwire()->gallery_pagination_options['option_name'] ); ?>" style="<?php if ( $current_video_layout != 'Gallery' ) echo "display:none;"; ?>">
+<?php if ( $playlists ) : ?>
+	<section id="<?php echo esc_attr( playwire()->gallery_pagination_options['option_name'] ); ?>" style="<?php if ( $current_video_layout != 'Gallery' ) echo "display:none;"; ?>">
+<?php else : ?>
+	<section id="<?php echo esc_attr( playwire()->gallery_pagination_options['option_name'] ); ?>" style="<?php if ( $current_video_layout != 'Gallery' ) echo "display:none;"; ?>" class="no-select">
+<?php endif; ?>
+
+
 	<p>
 
 		<label><strong><?php esc_html_e( 'Gallery Pagination Type', 'playwire' ); ?></strong></label>
@@ -140,7 +190,11 @@ if ( empty( $current_ratio ) ) {
 </section>
 
 
-<section id="<?php echo esc_attr( playwire()->playwire_aspect_ratio['select_option_name'] ); ?>">
+<?php if ( $playlists ) : ?>
+	<section id="<?php echo esc_attr( playwire()->playwire_aspect_ratio['select_option_name'] ); ?>">
+<?php else : ?>
+	<section id="<?php echo esc_attr( playwire()->playwire_aspect_ratio['select_option_name'] ); ?>" class="no-select">
+<?php endif; ?>
 
 	<label for="<?php echo esc_attr( playwire()->playwire_aspect_ratio['option_name'] ); ?>"><strong><?php esc_html_e( 'Player Size', 'playwire' ); ?></strong></label>
 

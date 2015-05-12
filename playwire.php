@@ -3,8 +3,8 @@
 * Plugin Name: Playwire for WordPress
 * Plugin URI:  http://wordpress.org/plugins/playwire
 * Plugin Slug: playwire-for-wordpress
-* Description: Playwire interfaces API with WordPress.
-* Version:     1.0.0
+* Description: Connects Wordpress to the Playwire API - Embed your Playwire videos and create and embed Video Galleries to use on your Wordpress site. 
+* Version:     1.0.3
 * Author:      Playwire
 * Author URI:  http://www.playwire.com
 * License:     GPLv2+
@@ -13,7 +13,7 @@
 
 
 /**
-* Copyright (c) 2014 10up (email : 10up.com)
+* Copyright (c) 2015 Playwire, LLC (email : team@playwire.com)
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License, version 2 or, at
@@ -31,7 +31,6 @@
 */
 // Bail if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
 
 /**
 * The main Playwire class.
@@ -266,6 +265,11 @@ class Playwire {
 	protected $videos_option_name = 'playwire_user_videos';
 
 	/**
+	* @var string Defines the user publisher id.
+	*/
+	protected $playwire_pub_id = 'playwire_pub_id';
+
+	/**
 	* @var string Video title class title key
 	*/
 	protected $video_title = 'video_title';
@@ -394,6 +398,7 @@ class Playwire {
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-video-radio-categories.php' );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-video-shortcode.php'        );
 		require_once( PLAYWIRE_PATH . 'includes/classes/class-videos-cpt.php'             );
+		require_once( PLAYWIRE_PATH . 'includes/classes/class-publisher-id.php'           );
 	}
 
 
@@ -416,6 +421,7 @@ class Playwire {
 			new PlaywireVideoApiInterface();
 			new PlaywireVideoMetaboxes();
 			new PlaywireVideoRadioCategories();
+			new PlaywirePublisher();
 		}
 	}
 
@@ -431,7 +437,6 @@ class Playwire {
 		add_action( 'admin_enqueue_scripts', array( $this, 'playwire_scripts_styles' ), 0 );
 		add_action( 'wp_enqueue_scripts',    array( $this, 'playwire_scripts_styles' ), 0 );
 	}
-
 
 	/**
 	* Default initialization for the plugin:
@@ -567,7 +572,6 @@ class Playwire {
 				"name" => ''
 			);
 
-
 		// Load the options
 		$this->options = get_option( $this->plugin_options_name );
 
@@ -616,7 +620,7 @@ class Playwire {
 
 		if ( get_post_type() === $this->videos_post_type || $pagenow == "post.php?post_type={$this->videos_post_type}" ) {
 			$edit_screen_url  = admin_url( "post-new.php?post_type={$this->playlists_post_type}" );
-			$edit_screen_text = esc_html( 'Add New Playlist', 'playwire' );
+			$edit_screen_text = esc_html( 'Add New Video Gallery', 'playwire' );
 			$is_edit_screen   = true;
 		}
 
