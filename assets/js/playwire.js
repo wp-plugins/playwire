@@ -1,8 +1,16 @@
 /*! Playwire - v0.1.0
  * http://wordpress.org/plugins
  * Copyright (c) 2014; * Licensed GPLv2+ */
+
 ( function( $, window, undefined ) {
 	'use strict';
+
+	//$('.help-click').click(function(event){
+		//event.preventDefault();
+
+		//$('#help-section').html("<div class='success-row'><div class='success-instructions'><h2>View and Upload Videos</h2><h4>*PLEASE NOTE* - <em>You can upload videos from Playwire.com <strong>and</strong> from this Plugin.</em></h4><h4>If you have already have videos on Playwire.com, they should be here:<br><a href='$video_url'>Playwire Video &gt;&nbsp;Videos</a></h4><h4>If you have no videos on Playwire.com, watch the tutorial video to learn how to upload your videos to Playwire.com from the Playwire Video Wordpress Plugin.</h4></div><div class='success-video'><script data-config='//config.playwire.com/1000830/videos/v2/3652253/zeus.json' data-css='//cdn.playwire.com/bolt/js/zeus/skins/default.css' data-height='100%' data-width='100%' src='//cdn.playwire.com/bolt/js/zeus/embed.js' type='text/javascript'></script></div></div><hr class='success-hr'><div class='success-row'><div class='success-instructions'><h3>Create Video Galleries from Playlists on Playwire.com</h3><h4>*PLEASE NOTE* - <em>Playwire Playlists are <strong>NOT</strong> the same as Video Galleries you create with this Plugin.</em></h4><h4>You can easily create custom Video Galleries to embed in your pages with this plugin.</h4>To get started, <a href='$video_url'>Click Here</a> to view your Videos or <a href='$galley_url'>Click Here</a> to create Video Galleries.</div><div class='success-video'><script data-config='//config.playwire.com/1000830/videos/v2/3652253/zeus.json' data-css='//cdn.playwire.com/bolt/js/zeus/skins/default.css' data-height='100%' data-width='100%' src='//cdn.playwire.com/bolt/js/zeus/embed.js' type='text/javascript'></script></div></div><hr class='success-hr'><div class='success-row'><div class='success-instructions'><h3>Create Video Galleries from Playwire Playlists</h3>To get started, <a href='$video_url'>Click Here</a> to view your Videos or <a href='$galley_url'>Click Here</a> to create Video Galleries.</div><div class='success-video'><script data-config='//config.playwire.com/1000830/videos/v2/3652253/zeus.json' data-css='//cdn.playwire.com/bolt/js/zeus/skins/default.css' data-height='100%' data-width='100%' src='//cdn.playwire.com/bolt/js/zeus/embed.js' type='text/javascript'></script></div></div>");
+
+	//});
 
 	//--------------------------------------------------//
 	// Adds in a jquery dialog box for the single video posts edit screen
@@ -15,8 +23,8 @@
 
 		diff_element.dialog( {
 				'dialogClass'   : 'wp-dialog',
-				'modal'         : true,
-				'autoOpen'      : true,
+				'modal'         : false,
+				'autoOpen'      : false,
 				'closeOnEscape' : true,
 				'buttons'       : {
 					"Ignore": function() {
@@ -409,17 +417,6 @@
 		}
 	);
 
-
-	//--------------------------------------------------//
-	// Sets a placeholder text for the video upload box
-	//--------------------------------------------------//
-	var playwire_upload_placeholder = document.getElementsByClassName( 'playwire-upload-placeholder' );
-	$( '.playwire-upload input[type=file]' ).on( 'change', function() {
-		//Replace the default fakepath that's given to file upload names for display purposes only
-		$( playwire_upload_placeholder ).text( $( this ).val().replace( /C:\\fakepath\\/i, '' ) );
-	} );
-
-
 	//--------------------------------------------------//
 	// Allows pagination offset for gallery pagination
 	//--------------------------------------------------//
@@ -431,5 +428,8 @@
 		$( document.getElementsByClassName( gallery_class ) ).find( '.current_page' ).val( page_num );
 	}
 
-} )( jQuery, this );
+	function test_me(){
+		alert('TESTTT');
+	}
 
+} )( jQuery, this );

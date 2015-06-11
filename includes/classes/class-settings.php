@@ -35,7 +35,26 @@ class PlaywireSettings extends Playwire {
 		add_action( 'admin_init',    array( $this, 'dismiss_admin_notice' ) );
 		add_action( 'admin_menu',    array( $this, 'menu_page'            ) );
 		add_action( 'updated_option',array( $this, 'options_check'        ) );
+		//add_action( 'admin_init',    array( $this, 'ajax_form'            ) );
 	}
+
+	/**
+	* admin_notice function.
+	*
+	* @access public
+	* @return void
+	*/
+	public function ajax_form() {
+	   if ( is_admin() ){ // for Admin Dashboard Only
+	      // Embed the Script on our Plugin's Option Page Only
+	      if ( isset($_GET['page']) && $_GET['page'] == 'playwire-settings' ) {
+	      	echo "here";
+	      	wp_enqueue_script('jquery');
+	        wp_enqueue_script( 'jquery-form' );
+	      }
+	   }
+	}
+
 
 	/**
 	* admin_notice function.
@@ -51,7 +70,6 @@ class PlaywireSettings extends Playwire {
 		}
 
 	}
-
 
 	/**
 	* admin_notice function.
@@ -135,7 +153,9 @@ class PlaywireSettings extends Playwire {
 			$menu_icon = '';
 		}
 
-		add_menu_page( 'playwire', 'Playwire', 'publish_posts', $this->menu_page, '', $menu_icon, 21.123456789 ); //We will use an obscure decimal so that it doesn't override another menu item
+		add_menu_page( 'playwire', 'Playwire Video', 'publish_posts', $this->menu_page, '', $menu_icon, 21.123456789 ); //We will use an obscure decimal so that it doesn't override another menu item
+
+		add_submenu_page( 'playwire', 'Playwire Settings', 'Playwire Settings', 'manage_options', 'options-general.php?page=playwire-settings');
 	}
 
 	/**
@@ -147,11 +167,12 @@ class PlaywireSettings extends Playwire {
 	public function add_plugin_page() {
 		add_options_page(
 			__( 'Settings Admin', 'playwire' ),
-			__( 'Playwire',       'playwire' ),
+			__( 'Playwire Settings',       'playwire' ),
 			'manage_options',
 			$this->settings_page,
 			array( $this, 'settings_page' )
 		);
+
 	}
 
 	/**
@@ -192,17 +213,17 @@ class PlaywireSettings extends Playwire {
 		);
 
 		add_settings_field(
-			$this->token,
-			__( 'API Token', 'playwire' ),
-			array( $this, 'token_callback' ),
+			$this->sync,
+			__( '', 'playwire' ),
+			array( $this, 'sync_callback' ),
 			$this->settings_page,
 			$this->setting_section_id
 		);
 
 		add_settings_field(
-			$this->sync,
-			__( 'Sync Videos', 'playwire' ),
-			array( $this, 'sync_callback' ),
+			$this->token,
+			__( '', 'playwire' ),
+			array( $this, 'token_callback' ),
 			$this->settings_page,
 			$this->setting_section_id
 		);
@@ -362,8 +383,7 @@ class PlaywireSettings extends Playwire {
 		// Get the value
 		$token = isset( $playwire->options[ $playwire->token ] ) ? $playwire->options[ $playwire->token ] : null; ?>
 
-		<input type="text" size="80" id="<?php echo esc_attr( $playwire->token ); ?>" name="<?php echo esc_attr( $playwire->plugin_options_name ); ?>[<?php echo esc_attr( $playwire->token ); ?>]" value="<?php echo esc_attr( $token ); ?>" autocomplete="off" <?php disabled( $token ); ?> />
-		<p class="description"><?php esc_html_e( 'Your API token will be updated automatically according to your login info.', 'playwire' ); ?></p>
+		<input type="text" class="no-select" size="80" id="<?php echo esc_attr( $playwire->token ); ?>" name="<?php echo esc_attr( $playwire->plugin_options_name ); ?>[<?php echo esc_attr( $playwire->token ); ?>]" value="<?php echo esc_attr( $token ); ?>" autocomplete="off" <?php disabled( $token ); ?> />
 
 		<?php
 	}
@@ -381,8 +401,8 @@ class PlaywireSettings extends Playwire {
 
 		$sync= isset( $playwire->options[$playwire->sync] ) ? $playwire->options[$playwire->sync] : null; ?>
 
-		<input type="checkbox" id="<?php echo esc_attr( $playwire->sync ); ?>" name=<?php echo esc_attr( $playwire->plugin_options_name ); ?>[<?php echo esc_attr( $playwire->sync ); ?>] value="1" <?php checked( $sync, 1 ); ?> />
-		<p class="description"><strong>Warning:</strong><?php esc_html_e(  ' This has potential to delete destroy or alter your Playwire Posts as it attempts to sync with the Playwire API',  'playwire'  ); ?></p>
+		<input type="checkbox" class="no-select" id="<?php echo esc_attr( $playwire->sync ); ?>" name=<?php echo esc_attr( $playwire->plugin_options_name ); ?>[<?php echo esc_attr( $playwire->sync ); ?>] value="1" <?php checked( $sync, 1 ); ?> checked/>
+
 		<?php
 	}
 

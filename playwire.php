@@ -1,10 +1,10 @@
 <?php
 /**
-* Plugin Name: Playwire for WordPress
+* Plugin Name: Playwire Wordpress Video Player
 * Plugin URI:  http://wordpress.org/plugins/playwire
-* Plugin Slug: playwire-for-wordpress
-* Description: Connects Wordpress to the Playwire API - Embed your Playwire videos and create and embed Video Galleries to use on your Wordpress site. 
-* Version:     1.0.3
+* Plugin Slug: playwire
+* Description: Playwire Wordpress Video Player connects your Wordpress site to the Playwire API - Upload, manage, and embed your Playwire Videos and Video Galleries. Playwire is a video content management system (CMS), HTML5 video player and monetization platform all in one integrated platform
+* Version:     1.0.4
 * Author:      Playwire
 * Author URI:  http://www.playwire.com
 * License:     GPLv2+
@@ -647,7 +647,7 @@ class Playwire {
 		) );
 
 		// Styles
-		wp_register_style( 'playwire-styles', PLAYWIRE_URL . 'assets/css/playwire.min.css', array(), $version, 'all' );
+		wp_register_style( 'playwire-styles', PLAYWIRE_URL . 'assets/css/playwire.css', array(), $version, 'all' );
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 		wp_enqueue_style( 'playwire-styles' );
 	}

@@ -1,21 +1,24 @@
-=== Playwire ===
+=== Playwire Wordpress Video Player ===
 
 Contributors: Playwire
 Site link: http://www.playwire.com
-Tags: Video, Video Gallery, content monetization, advertising, ads, Playwire, Playlist, upload video, video management
+Donate link: http://www.playwire.com
+Tags: playwire, video, video player, video gallery, upload videos, manage videos, embed videos, html5 video, mobile video, vast, vpaid, video management system,content monetization, advertising, video ads, video advertising, playlist, upload video
 Requires at least: 3.5.1
 Tested up to: 4.2.2
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The Playwire plugin connects to your Playwire.com account to help you manage, distribute, analyze and monetize your videos on your website.
+Upload, manage and embed videos with the Playwire Wordpress Video Player. All-in-one video content management, HTML5 video player and monetization.
 
 == Description ==
 
 Playwire is a comprehensive video hosting platform that offers everything your business needs for online video publishing. With Playwire, publishers have an all-in-one solution to encode, host, syndicate, stream, and monetize their video content.
 
-The Playwire for Wordpress plugin is an easy way for you to integrate with your Playwire.com account to manage your video inventory and posting without leaving your Wordpress admin CMS.
+The Playwire Wordpress Video Player plugin is an easy way for you to integrate with your Playwire account to manage your video inventory and posting without leaving your Wordpress admin CMS.
+
+The Playwire platform handles SD and HD FLV & H.264 encoded video formats like MP4, M4V, M4A, MOV, MP4V etc... HTML 5 video support enables cross browser and cross platform (desktop, tablet, mobile) playback.
 
 ###Features
 
@@ -62,6 +65,12 @@ The ability to upload and select specific video thumbnails will be in the follow
 
 == Changelog ==
 
+= 1.0.4 =
+* Naming changes, Plugin is now called "Playwire Wordpress Video Player"
+* Added "Playwire Settings" to Playwire Admin menu
+* Hid API token and Sync checkbox from settings login
+* Added loading screen after clicking "Save Settings" 
+
 = 1.0.3 =
 * Upload video to Phoenix bug fixes for Wordpress versions 3.5-3.9
 * No videos/playlists error messaging in media library view
@@ -81,3 +90,23 @@ The ability to upload and select specific video thumbnails will be in the follow
 = 1.0.0 =
 * Initial Plugin Release
 
+== Upgrade Notice ==
+
+= 1.0.4 =
+* Naming changes, Plugin is now called "Playwire Video", added "Playwire Settings" to Playwire Admin menu, did API token and Sync checkbox from settings login, added loading screen after clicking "Save Settings"
+
+= 1.0.3 =
+* Upload video to Phoenix bug fixes for Wordpress versions 3.5-3.9, no videos/playlists error messaging in media library view, small bug and styling fixes
+
+= 1.0.2 =
+* Added Bolt Player 3.0 API Support, renamed “Playlists” to “Video Galleries” to reduce confusion, improved user experience for uploading videos and creating Video Galleries, small bug fixes
+
+= 1.0.1 =
+* Fixed the video queries in the library so that it pulls in more relevant results, added single videos feature to the plugin, added output buffering for the shortcodes
+
+= 1.0.0 =
+* Initial Plugin Release
+
+== Translations ==
+ 
+* English 

@@ -9,4 +9,15 @@
 		<?php submit_button(); ?>
 	</form>
 
+	<div id="saveResult"></div>
+
+	<script type="text/javascript">
+	jQuery(document).ready(function() {
+	   jQuery('#submit').click(function() { 
+		jQuery('#wpbody-content').html("<div class='loader'><p class='loader-text'>Please Wait, Syncing Account  . . .</p></div>");
+	   
+	   });
+	});
+	</script>
+
 </div>
