@@ -6,7 +6,7 @@ Donate link: http://www.playwire.com
 Tags: video, video player, video gallery, upload videos, manage videos, embed videos, html5 video, mobile video, vast, vpaid, video management system,content monetization, advertising, video ads, video advertising, playlist, upload video, playwire
 Requires at least: 3.5.1
 Tested up to: 4.2.2
-Stable tag: 1.0.8.1
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,7 @@ The ability to upload and select specific video thumbnails will be in the follow
 
 == Changelog ==
 
-= 1.0.8.1 =
+= 1.0.9 =
 * More log-in page bug fixes
 
 = 1.0.8 =
@@ -108,7 +108,7 @@ The ability to upload and select specific video thumbnails will be in the follow
 
 == Upgrade Notice ==
 
-= 1.0.8.1 =
+= 1.0.9 =
 * More log-in page bug fixes
 
 = 1.0.8 =

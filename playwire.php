@@ -4,7 +4,7 @@
 * Plugin URI:  http://wordpress.org/plugins/playwire
 * Plugin Slug: playwire
 * Description: Playwire Wordpress Video Player connects your Wordpress site to the Playwire API - Upload, manage, and embed your Playwire Videos and Video Galleries. Playwire is a video content management system (CMS), HTML5 video player and monetization platform all in one integrated platform
-* Version:     1.0.8.1
+* Version:     1.0.9
 * Author:      Playwire
 * Author URI:  http://www.playwire.com
 * License:     GPLv2+
