@@ -14,7 +14,7 @@
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 	   jQuery('#submit').click(function() { 
-		jQuery('#wpbody-content').html("<div class='loader'><p class='loader-text'>Please Wait, Syncing Account  . . .</p></div>");
+		jQuery('#wpbody-content').html("<div class='loading-jawn-big'>Please Wait, Syncing Account with Playwire ...</div>");
 	   
 	   });
 	});

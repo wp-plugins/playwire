@@ -21,12 +21,11 @@ class PlaywirePostTypeVideos extends Playwire {
 		add_action( 'admin_menu',                                   array( $this, 'hide_add_new_custom_type'     )        );
 		add_action( 'manage_playwire_videos_posts_custom_column',   array( $this, 'videos_columns'               ), 10, 2 );
 		add_action( 'admin_notices',                                array( $this, 'video_helper_text'            )        );
-
 		add_filter( 'enter_title_here',                             array( $this, 'filter_cpt_title'             ), 8  );
 		add_filter( 'manage_playwire_videos_posts_columns',         array( $this, 'videos_head_columns'          ), 10 );
 		add_filter( 'manage_edit-playwire_videos_sortable_columns', array( $this, 'videos_sortable_title'        )     );
+		
 	}
-
 
 	/**
 	* posttype function.
@@ -177,7 +176,8 @@ class PlaywirePostTypeVideos extends Playwire {
 		//Here we will insert new elements into the defaults columns array for the video post type
 		$arr = array(
 			'video_thumbnail'  => 'Thumbnail',
-			'title'            => 'Title / Description',
+			'title'            => 'Video Title',
+			'uploaded_on'      => 'Uploaded On',
 			'video_categories' => 'Category',
 			'video_share'      => 'Sandbox Share'
 		);
@@ -206,6 +206,10 @@ class PlaywirePostTypeVideos extends Playwire {
 				<img src="<?php echo esc_url( $video_thumbnail ); ?>">
 				<?php
 			break;
+			case 'uploaded_on':
+				$uploaded = get_the_date('M j, Y @ g:ia');
+				echo $uploaded;
+			break;
 			case 'video_categories':
 				$terms = wp_get_object_terms( $post_ID, $this->videos_taxonomy );
 				if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
@@ -220,7 +224,7 @@ class PlaywirePostTypeVideos extends Playwire {
 				$intend_to_share = get_post_meta( $post->ID, $this->video_post_type_intend_to_share, true );
 				$intend_to_share = ( isset( $intend_to_share ) ? $intend_to_share : true );
 				?>
-				<a href="#" data-tooltip="<?php esc_html_e( 'Share your video on the Playwire platform to allow publishing partners to syndicate on their websites', 'playwire' ); ?>">
+				<a href="#" data-tooltip="<?php esc_html_e( 'Share your video on the Playwire platform to allow publishing partners to syndicate on their websites. Edit post to Enable/Disable', 'playwire' ); ?>">
 					<input id="<?php echo esc_attr( $this->video_post_type_intend_to_share ); ?>" type="checkbox" name="<?php echo esc_attr( $this->video_post_type_intend_to_share ); ?>" value="1"  <?php checked( true, $intend_to_share, true ); ?> disabled="disabled"/>
 				</a>
 <?php
@@ -239,8 +243,11 @@ class PlaywirePostTypeVideos extends Playwire {
 	*/
 	public function videos_sortable_title( $columns ) {
 		$columns['video_title_description'] = 'post_title';
+		$columns['uploaded_on'] = 'uploaded_on';
 		return $columns;
 	}
+
+
 
 	/**
 	 * reset_videos_excerpt_metabox
@@ -272,7 +279,7 @@ class PlaywirePostTypeVideos extends Playwire {
 				<div class="error-container">
 					<div class="playwire-error animated shake">
 						<h3><span class="error-text"><span class="dashicons dashicons-flag"></span> UNABLE TO USE PLAYWIRE PLUGIN</span></h3>
-							<h3 class="error-styles">You must have at least one video on your Playwire.com account before using the plugin. </br><a href="<?php echo $url ?>" target="_blank">Click here</a> to upload video files from Playwire.com account or visit our <a href="<?php echo esc_url('http://support.playwire.com') ?>" target="_blank">Support Site</a> for help.</h3>
+							<h3 class="error-styles">You must have at least one video on your Playwire account before using the plugin. </br><a href="<?php echo $url ?>" target="_blank">Click here</a> to upload video files from Playwire.com account or visit our <a href="<?php echo esc_url('http://support.playwire.com/wordpress-plugin-help/') ?>" target="_blank">Support Site</a> for help.</h3>
 					</div>
 				</div>
 
@@ -280,7 +287,7 @@ class PlaywirePostTypeVideos extends Playwire {
 				<div class="error-container">
 					<div class="playwire-warning animated flash">
 						<h3><span class="warning-text"><span class="dashicons dashicons-flag"></span> IMPORTANT REMINDER</span></h3>
-						<h3 class="error-styles">The upload file size limit with this plugin is approximately <b>20MB</b>. <a href="<?php echo $url ?>" target="_blank">Click here</a> to upload larger video files from your Playwire.com account or visit our <a href="<?php echo esc_url('http://support.playwire.com') ?>" target="_blank">Support Site</a> for instructions on increasing your Wordpress upload limit.</h3>
+						<h3 class="error-styles">The upload file size limit with this plugin is approximately <b>20MB</b>. <a href="<?php echo $url ?>" target="_blank">Click here</a> to upload larger video files from your Playwire account or visit our <a href="<?php echo esc_url('http://support.playwire.com/wordpress-plugin-help/') ?>" target="_blank">Support Site</a> for instructions on increasing your Wordpress upload limit.</h3>
 					</div>
 				</div>
 

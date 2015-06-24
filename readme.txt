@@ -3,10 +3,10 @@
 Contributors: Playwire
 Site link: http://www.playwire.com
 Donate link: http://www.playwire.com
-Tags: playwire, video, video player, video gallery, upload videos, manage videos, embed videos, html5 video, mobile video, vast, vpaid, video management system,content monetization, advertising, video ads, video advertising, playlist, upload video
+Tags: video, video player, video gallery, upload videos, manage videos, embed videos, html5 video, mobile video, vast, vpaid, video management system,content monetization, advertising, video ads, video advertising, playlist, upload video, playwire
 Requires at least: 3.5.1
 Tested up to: 4.2.2
-Stable tag: 1.0.4
+Stable tag: 1.0.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,8 +65,24 @@ The ability to upload and select specific video thumbnails will be in the follow
 
 == Changelog ==
 
+= 1.0.8.1 =
+* More log-in page bug fixes
+
+= 1.0.8 =
+* More log-in page bug fixes
+
+= 1.0.7 =
+* Log-in page bug fixes
+
+= 1.0.6 =
+* Small styling changes
+
+= 1.0.5 =
+* New on-boarding help experience to guide you through using the plugin after signing in.
+* Updated banner and thumbnail images for display in Wordpress Plugin Directory
+
 = 1.0.4 =
-* Naming changes, Plugin is now called "Playwire Wordpress Video Player"
+* Naming changes, Plugin is now called "Playwire Video"
 * Added "Playwire Settings" to Playwire Admin menu
 * Hid API token and Sync checkbox from settings login
 * Added loading screen after clicking "Save Settings" 
@@ -91,6 +107,21 @@ The ability to upload and select specific video thumbnails will be in the follow
 * Initial Plugin Release
 
 == Upgrade Notice ==
+
+= 1.0.8.1 =
+* More log-in page bug fixes
+
+= 1.0.8 =
+* More log-in page bug fixes
+
+= 1.0.7 =
+* Log-in page bug fixes
+
+= 1.0.6 =
+* Small styling changes
+
+= 1.0.5 =
+* New on-boarding help experience to guide you through using the plugin after signing in. Updated banner and thumbnail images for display in Wordpress Plugin Directory
 
 = 1.0.4 =
 * Naming changes, Plugin is now called "Playwire Video", added "Playwire Settings" to Playwire Admin menu, did API token and Sync checkbox from settings login, added loading screen after clicking "Save Settings"

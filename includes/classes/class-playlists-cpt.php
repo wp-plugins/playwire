@@ -33,7 +33,7 @@ class PlaywirePostTypePlaylists extends Playwire {
 		// Post Type Labels
 		$labels = array(
 			'all_items'            => esc_attr__( 'Video Galleries',                   'playwire' ),
-			'name'                 => esc_attr__( 'Video Gallery',                     'playwire' ),
+			'name'                 => esc_attr__( 'Video Galleries',                   'playwire' ),
 			'singular_name'        => esc_attr__( 'Video Gallery',                     'playwire' ),
 			'add_new'              => esc_attr__( 'Add New Video Gallery',             'playwire' ),
 			'add_new_item'         => esc_attr__( 'Add New Video Gallery',             'playwire' ),
@@ -119,10 +119,14 @@ class PlaywirePostTypePlaylists extends Playwire {
 
 		global $pagenow;
 
-		if ( ('edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $pagenow) && get_post_type() === "playwire_playlists" ) {
+		$has_playlists = PlaywirePublisher::get_playlists();
+		$url = PlaywirePublisher::pub_id_playlists();
 
-			$has_playlists = PlaywirePublisher::get_playlists();
-			$url = PlaywirePublisher::pub_id_playlists();
+		?>
+
+		<?php
+
+		if ( ('edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $pagenow) && get_post_type() === "playwire_playlists" ) {
 
 			if (!$has_playlists) :  ?>
 				<div class="error-container">
@@ -145,7 +149,7 @@ class PlaywirePostTypePlaylists extends Playwire {
 				<div class="error-container">
 				<div class="playwire-warning animated bounce">
 					<h3><span class="warning-text"><span class="dashicons dashicons-flag"></span> IMPORTANT REMINDER</span></h3>
-					<h3 class="error-styles">You <u>MUST</u> create playlists on your Playwire.com account before you are able to create  and embed Video Galleries</h3>
+					<h3 class="error-styles">You <u>MUST</u> create playlists on your Playwire account before you are able to create  and embed Video Galleries</h3>
 
 					<div class="half">
 						<h3 class="error-styles">Click here to &roarr;<a href="<?php echo $url ?>" class="playwire-btn" target="_blank">Create Playlists on Playwire&nbsp;<span class="dashicons dashicons-format-video"></span></a>
@@ -153,7 +157,7 @@ class PlaywirePostTypePlaylists extends Playwire {
 					</div>
 
 					<div class="half-r">
-						<h3 class="error-styles">or Click here for &roarr;</span><a href="http://support.playwire.com" class="help-btn" target="_blank">Help Creating Playlists&nbsp;<span class="dashicons dashicons-editor-help"></span></span></a></h3>
+						<h3 class="error-styles">or Click here for &roarr;</span><a href="http://support.playwire.com/wordpress-plugin-help/" class="help-btn" target="_blank">Help Creating Playlists&nbsp;<span class="dashicons dashicons-editor-help"></span></span></a></h3>
 					</div>
 				</div>
 				</div>	
